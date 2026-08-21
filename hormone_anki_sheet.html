@@ -1,0 +1,82 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ホルモン暗記シート</title><style>
+*{box-sizing:border-box}body{margin:0;background:#eef1f2;color:#111;font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",Meiryo,sans-serif}.app{max-width:1200px;margin:auto;padding:16px}.toolbar{background:#fff;border:1px solid #c9c9c9;padding:12px 14px;margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}.toolbar strong{margin-right:10px}.btn{background:#fff;border:1px solid #888;padding:8px 12px;cursor:pointer;font-size:14px}.btn.active{background:#333;color:#fff}.paper{background:#fff;padding:18px 18px 28px;box-shadow:0 2px 14px #0002;overflow-x:auto}.title{text-align:center;font-size:25px;font-weight:700;letter-spacing:.12em;margin:3px 0 16px}.hint{font-size:13px;text-align:center;margin:-7px 0 13px;color:#555}table{border-collapse:collapse;width:100%;min-width:900px;table-layout:fixed}th,td{border:1.5px solid #333;padding:7px 8px;vertical-align:middle;font-size:15px;line-height:1.5}th{background:#f1f1f1;text-align:center;font-size:16px}.c1{width:18%}.c2{width:14%}.c3{width:24%}.c4{width:44%}.center{text-align:center}.group{font-weight:700;text-align:center}.small{font-size:13px}.mask{display:inline-block;background:#e53935;color:#e53935;border-radius:2px;padding:0 3px;min-width:3em;cursor:pointer;user-select:none}.mask.revealed{background:transparent;color:inherit}.mask.red{color:#d7191c;background:transparent}.mask.red.hidden{background:#e53935;color:#e53935}.legend{margin:12px auto 0;max-width:900px;text-align:center;font-size:13px}.legend span{margin:0 8px}.legend b{color:#d7191c}@media(max-width:650px){
+  .app{padding:0;background:#fff}
+  .toolbar{
+    position:sticky;top:0;z-index:3;
+    padding:7px 8px;margin:0;
+    gap:5px;
+  }
+  .toolbar strong{
+    width:100%;
+    margin:0 0 2px;
+    font-size:15px;
+  }
+  .toolbar span{display:none}
+  .btn{
+    flex:1;
+    padding:7px 4px;
+    font-size:12px;
+    white-space:nowrap;
+  }
+  .paper{
+    padding:8px 4px 14px;
+    box-shadow:none;
+    overflow-x:visible;
+  }
+  .title{
+    font-size:19px;
+    margin:4px 0 5px;
+    letter-spacing:.06em;
+  }
+  .hint{
+    display:none;
+  }
+  table{
+    width:100%;
+    min-width:0;
+    table-layout:fixed;
+  }
+  th,td{
+    padding:4px 3px;
+    font-size:11px;
+    line-height:1.35;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+  th{font-size:12px}
+  .c1{width:15%}
+  .c2{width:13%}
+  .c3{width:25%}
+  .c4{width:47%}
+  .mask{
+    min-width:0;
+    padding:0 2px;
+  }
+  .legend{
+    margin-top:8px;
+    font-size:10px;
+    line-height:1.5;
+  }
+  .legend span{margin:0 3px}
+  sup{font-size:8px}
+}
+</style></head><body><div class="app">
+<div class="toolbar"><strong>🧬 ホルモン暗記シート</strong><button class="btn active" data-mode="red">赤字を隠す</button><button class="btn" data-mode="all">すべて表示</button><button class="btn" id="reset">もう一度隠す</button><span style="margin-left:auto;font-size:13px">赤字を隠した後、隠れた部分をタップするとその語句だけ表示</span></div>
+<div class="paper"><div class="title">ホルモン暗記シート</div><div class="hint">紙の暗記シートのレイアウトを再現したデジタル赤シート版</div>
+<table><thead><tr><th class="c1" colspan="2">内分泌腺</th><th class="c3">ホルモン</th><th class="c4">主なはたらき</th></tr></thead><tbody>
+<tr><td colspan="2" class="group"><span class="mask red">視床下部</span></td><td><span class="mask red">放出ホルモン</span><br><span class="mask red">放出抑制ホルモン</span></td><td>ホルモン分泌の促進と抑制</td></tr>
+<tr><td rowspan="4" class="group">脳<br>下<br>垂<br>体</td><td rowspan="3" class="group"><span class="mask red">前葉</span></td><td><span class="mask red">成長ホルモン</span></td><td>１．タンパク質合成促進<br>２．血糖濃度を上げる<br>３．骨の発育促進</td></tr>
+<tr><td><span class="mask red">甲状腺</span>刺激ホルモン</td><td><span class="mask red">甲状腺</span>からのホルモン(チロキシン)の分泌促進</td></tr>
+<tr><td><span class="mask red">副腎皮質</span>刺激ホルモン</td><td><span class="mask red">副腎皮質</span>からのホルモン(糖質コルチコイド)の分泌促進</td></tr>
+<tr><td class="group"><span class="mask red">後葉</span></td><td><span class="mask red">バソプレシン</span></td><td>１．血圧を上げる<br>２．腎臓で<span class="mask red">水分</span>の再吸収を促進</td></tr>
+<tr><td colspan="2" class="group"><span class="mask red">甲状腺</span></td><td><span class="mask red">チロキシン</span></td><td>１．生体内の<span class="mask red">代謝</span>を促進<br>２．成長と分化(=変態)を促進</td></tr>
+<tr><td colspan="2" class="group"><span class="mask red">副甲状腺</span></td><td><span class="mask red">パラトルモン</span></td><td>血液中のCa<sup>2＋</sup>濃度を上げる</td></tr>
+<tr><td rowspan="3" class="group"><span class="mask red">副腎</span></td><td class="group"><span class="mask red">髄質</span></td><td><span class="mask red">アドレナリン</span></td><td>血糖濃度を上げる<br><span class="mask red">グリコーゲンの分解を促進</span></td></tr>
+<tr><td rowspan="2" class="group"><span class="mask red">皮質</span></td><td><span class="mask red">糖質コルチコイド</span></td><td>血糖濃度を上げる<br><span class="mask red">タンパク質からの糖の合成促進</span></td></tr>
+<tr><td><span class="mask red">鉱質コルチコイド</span></td><td>腎臓での<span class="mask red">Na＋</span>の再吸収の促進</td></tr>
+<tr><td rowspan="2" class="group">すい臓</td><td rowspan="2" class="group"><span class="mask red">ランゲルハンス島</span></td><td>〔Ａ細胞〕<span class="mask red">グルカゴン</span></td><td>血糖濃度を上げる<br><span class="mask red">グリコーゲンの分解を促進</span></td></tr>
+<tr><td>〔Ｂ細胞〕<span class="mask red">インスリン</span></td><td>血糖濃度を下げる<br><span class="mask red">グリコーゲンの合成</span><br><span class="mask red">細胞でのグルコース消費促進</span></td></tr>
+</tbody></table><div class="legend"><span>● <b>赤字部分</b>＝暗記対象</span><span>● タップ＝その語句だけ表示</span><span>● 「赤字を隠す」＝紙の赤シート相当</span></div></div></div>
+<script>
+const masks=[...document.querySelectorAll('.mask.red')];function hide(){masks.forEach(x=>x.classList.add('hidden'));document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('active',x.dataset.mode==='red'))}function show(){masks.forEach(x=>x.classList.remove('hidden'));document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('active',x.dataset.mode==='all'))}masks.forEach(x=>x.onclick=()=>x.classList.toggle('hidden'));document.querySelector('[data-mode="red"]').onclick=hide;document.querySelector('[data-mode="all"]').onclick=show;document.getElementById('reset').onclick=hide;show();
+</script></body></html>
