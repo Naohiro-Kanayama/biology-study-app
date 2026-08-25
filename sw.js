@@ -1,4 +1,4 @@
-const CACHE_NAME = "biology-study-app-v1";
+const CACHE_NAME = "biology-study-app-v2";
 
 const APP_SHELL = [
   "./",
