@@ -1,4 +1,4 @@
-const CACHE_NAME = "biology-study-app-v2";
+const CACHE_NAME = "biology-study-app-v3";
 
 const APP_SHELL = [
   "./",
@@ -30,6 +30,22 @@ self.addEventListener("activate", event => {
 
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
+
+  const requestUrl = new URL(event.request.url);
+  const isHomePage = requestUrl.pathname.endsWith("/") || requestUrl.pathname.endsWith("/index.html");
+
+  if (event.request.mode === "navigate" && isHomePage) {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put("./index.html", copy));
+          return response;
+        })
+        .catch(() => caches.match("./index.html"))
+    );
+    return;
+  }
 
   event.respondWith(
     caches.match(event.request).then(cached => {
