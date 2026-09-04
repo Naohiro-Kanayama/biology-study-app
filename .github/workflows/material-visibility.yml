@@ -1,0 +1,67 @@
+name: 教材の公開・非公開を切り替える
+
+on:
+  workflow_dispatch:
+    inputs:
+      material:
+        description: 教材を選んでください
+        required: true
+        type: choice
+        options:
+          - チロキシン分泌の調節
+      visibility:
+        description: 公開状態を選んでください
+        required: true
+        type: choice
+        options:
+          - 公開する
+          - 非公開にする
+
+permissions:
+  contents: write
+
+jobs:
+  update-visibility:
+    runs-on: ubuntu-latest
+    steps:
+      - name: アプリのファイルを読み込む
+        uses: actions/checkout@v4
+
+      - name: 公開設定を変更する
+        shell: bash
+        env:
+          SELECTED_MATERIAL: ${{ inputs.material }}
+          SELECTED_VISIBILITY: ${{ inputs.visibility }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          setting_keys = {
+              "チロキシン分泌の調節": "thyroxineSimulator",
+          }
+
+          selected_material = os.environ["SELECTED_MATERIAL"]
+          selected_visibility = os.environ["SELECTED_VISIBILITY"]
+          settings_path = Path("publish-settings.json")
+          settings = json.loads(settings_path.read_text(encoding="utf-8"))
+          settings[setting_keys[selected_material]] = selected_visibility == "公開する"
+          settings_path.write_text(
+              json.dumps(settings, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
+      - name: 変更を保存する
+        shell: bash
+        run: |
+          if git diff --quiet -- publish-settings.json; then
+            echo "公開状態はすでに選択した設定になっています。"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add publish-settings.json
+          git commit -m "教材の公開設定を変更"
+          git push
