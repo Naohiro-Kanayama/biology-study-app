@@ -1,11 +1,12 @@
-const CACHE_NAME = "biology-study-app-v3";
+const CACHE_NAME = "biology-study-app-v5";
 
 const APP_SHELL = [
   "./",
   "./index.html",
   "./hormone_anki_sheet.html",
-  "./manifest.webmanifest",
-  "./icon.svg"
+  "./thyroxine_simulator.html",
+  "./publish-settings.json",
+  "./manifest.webmanifest"
 ];
 
 self.addEventListener("install", event => {
