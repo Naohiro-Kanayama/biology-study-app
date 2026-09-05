@@ -1,10 +1,11 @@
-const CACHE_NAME = "biology-study-app-v5";
+const CACHE_NAME = "biology-study-app-v6";
 
 const APP_SHELL = [
   "./",
   "./index.html",
   "./hormone_anki_sheet.html",
   "./thyroxine_simulator.html",
+  "./pituitary_simulator.html",
   "./publish-settings.json",
   "./manifest.webmanifest"
 ];

@@ -1,3 +1,4 @@
 {
-  "thyroxineSimulator": true
+  "thyroxineSimulator": true,
+  "pituitarySimulator": true
 }
