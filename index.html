@@ -1,19 +1,54 @@
-<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#fff"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-v2.png"><title>生物学習アプリ</title><style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;background:#f4f6f8;color:#222}header{background:#fff;border-bottom:1px solid #ddd;padding:30px 20px;text-align:center}h1{margin:0;font-size:28px}main{max-width:760px;margin:auto;padding:24px 16px 48px}section{margin-bottom:28px}h2{font-size:20px;margin:10px 0 16px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}.card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #ddd;border-radius:14px;padding:22px;box-shadow:0 2px 8px #0000000d}.icon{font-size:36px}.title{font-size:20px;font-weight:700;margin-top:10px}.desc{color:#666;margin-top:8px;line-height:1.6;font-size:14px}.badge{display:inline-block;margin-top:12px;padding:4px 9px;border-radius:999px;background:#eee;font-size:12px}.message{background:#fff;border-radius:12px;padding:18px;color:#666}</style></head><body><header><h1>🧬 生物学習アプリ</h1></header><main id="main"><p class="message">教材を読み込んでいます…</p></main><script>
-const U="https://kcroxgnjjizugbwfkxbg.supabase.co",K="sb_publishable_B_kSeRc0HJ35NPjiGzwC1Q_mRQOnIvi";
-async function recordHomeView(){
-try{
- const r=await fetch(U+"/rest/v1/rpc/record_usage_event",{method:"POST",headers:{apikey:K,"Content-Type":"application/json"},body:JSON.stringify({p_event_type:"app_open",p_material_key:null}),keepalive:true});
- if(!r.ok){let d={};try{d=await r.json()}catch{}
- showCountStatus("閲覧回数の記録に失敗：HTTP "+r.status+" / "+(d.code||"")+" / "+(d.message||""));
- }else{showCountStatus("");}
-}catch{showCountStatus("閲覧回数を記録できませんでした（通信エラー）。教材は利用できます。");}
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#ffffff"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-v2.png"><title>生物学習アプリ</title><style>:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;color:#172f3b;background:#f3f6f5}*{box-sizing:border-box}body{margin:0}header{background:white;border-bottom:1px solid #dfe7e2}.head{max-width:1000px;margin:auto;padding:26px 24px;display:flex;align-items:center;gap:12px}.logo{display:grid;place-items:center;width:40px;height:40px;background:#173f3b;color:#bef0d6;border-radius:12px;font-size:24px}h1{font-size:24px;margin:0}main{max-width:1000px;margin:auto;padding:28px 24px 60px}.intro{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.intro h2,.sectionhead h2{font-size:16px;margin:0}.total,.view-controls small{font-size:12px;color:#63796d}.filters,.view-controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}button,a{touch-action:manipulation}button{font:inherit;cursor:pointer;min-height:44px}.filter{background:transparent;color:#47665a;border:1px solid #cddcd3;border-radius:24px;padding:10px 17px;font-size:13px}.filter[aria-pressed=true]{background:#173f3b;color:white;border-color:#173f3b}.view-controls{align-items:center;margin-bottom:30px}.view-controls small{margin-right:auto}.view-button{border:1px solid #d1dfd6;border-radius:10px;padding:8px 12px;background:#fff;color:#456357;font-size:12px}.view-button[aria-pressed=true]{background:#deeee5;border-color:#85ad99}section{margin-bottom:32px}.sectionhead{display:flex;align-items:center;gap:10px;margin-bottom:15px}.sectionhead span{font-size:11px;background:#e4ede7;padding:3px 8px;border-radius:5px;color:#576f63}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{display:block;text-decoration:none;color:inherit;background:white;border:1px solid #dce6df;border-radius:18px;padding:22px;transition:transform .15s,box-shadow .15s;min-width:0}.card:hover{transform:translateY(-3px);box-shadow:0 10px 22px #214f3910;border-color:#85b49d}.card:active{transform:scale(.985)}.card-labels{display:flex;align-items:center;gap:8px;margin-bottom:18px;min-height:34px}.type-icon{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;color:var(--accent);background:var(--bg);font-size:24px}.tag{font-size:11px;color:var(--accent)}.fresh{margin-left:auto;color:#397159;background:#edf6ee;font-size:10px;padding:4px 7px;border-radius:8px}.body h3{font-size:20px;line-height:1.5;margin:0 0 8px;overflow-wrap:anywhere}.body p{font-size:13px;line-height:1.8;color:#5e7167;margin:0}.bottom{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #e9efeb;margin-top:20px;padding-top:13px;color:var(--accent);font-size:12px;font-weight:600}.arrow{display:grid;place-items:center;border-radius:50%;background:var(--bg);width:28px;height:28px;font-size:17px}.compact{grid-template-columns:1fr;gap:10px}.compact .card{padding:15px 18px}.compact .card-labels{margin-bottom:7px;min-height:24px}.compact .type-icon{width:25px;height:25px;font-size:18px;border-radius:7px}.compact h3{font-size:17px;margin-bottom:4px}.compact .bottom{margin-top:9px;padding-top:8px}.message{padding:20px;background:#fff;border-radius:12px;line-height:1.8}.message button{display:block;margin-top:10px}:focus-visible{outline:3px solid #338b70;outline-offset:3px}[hidden]{display:none!important}@media(max-width:600px){.head{padding:20px}h1{font-size:21px}main{padding:24px 18px 40px}.grid{grid-template-columns:1fr}.card{padding:19px}.body h3{font-size:19px}.filter{font-size:12px;padding:9px 13px}.view-controls{gap:6px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}</style></head><body><header><div class="head"><div class="logo" aria-hidden="true">☘</div><h1>生物学習アプリ</h1></div></header><main><div class="intro"><h2>教材を選ぶ</h2><span class="total" id="total"></span></div><nav class="filters" id="filters" aria-label="教材の分類"></nav><div class="view-controls"><small>見やすい表示を選べます</small><button class="view-button" data-view="cards" aria-pressed="true">▦ カード</button><button class="view-button" data-view="compact" aria-pressed="false">☰ コンパクト</button></div><p class="message" id="notice" role="status">教材を読み込んでいます…</p><div id="catalog"></div></main><script>const U='https://kcroxgnjjizugbwfkxbg.supabase.co',K='sb_publishable_B_kSeRc0HJ35NPjiGzwC1Q_mRQOnIvi';
+let selected='すべて',layout='cards',materials=[];
+const dates={
+ 'hormone_anki_sheet.html':'2026-08-21T03:32:47Z',
+ 'thyroxine_simulator.html':'2026-09-04T08:03:57Z',
+ 'pituitary_simulator.html':'2026-09-05T08:51:49Z',
+ 'homeostasis_anki_sheet.html':'2026-09-06T13:56:09Z'
+};
+const known=['hormone_anki_sheet.html','homeostasis_anki_sheet.html','thyroxine_simulator.html','pituitary_simulator.html'];
+const colors=[['#e8f4ee','#26765f'],['#edf3e5','#61773c'],['#e9f1f8','#46759c'],['#efedf7','#79629e']];
+function el(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;}
+function safeFile(s){return typeof s==='string'&&/^[A-Za-z0-9][A-Za-z0-9_.-]*\.html$/.test(s)&&!['index.html','teacher.html','open.html'].includes(s);}
+function recent(v){const ms=Date.parse(v);return Number.isFinite(ms)&&Date.now()>=ms&&Date.now()-ms<7*86400000;}
+function badge(m){const modified=m.content_updated_at||dates[m.file_name];if(recent(modified)&&Date.parse(modified)>Date.parse(m.uploaded_at)+86400000)return '更新';return recent(m.uploaded_at)?'新着':'';}
+function render(){
+ const area=document.getElementById('catalog');area.replaceChildren();
+ const rows=materials.filter(m=>selected==='すべて'||m.category===selected);
+ document.getElementById('total').textContent=rows.length+'つの教材';
+ const categories=[...new Set(rows.map(m=>m.category||'その他'))];
+ categories.sort((a,b)=>{const order=['暗記シート','シミュレーション','問題演習','その他'];const rank=x=>order.includes(x)?order.indexOf(x):9;return rank(a)-rank(b)});
+ for(const category of categories){
+  const list=rows.filter(m=>(m.category||'その他')===category),section=el('section'),head=el('div','sectionhead'),grid=el('div','grid'+(layout==='compact'?' compact':''));
+  head.append(el('h2','',category),el('span','',list.length+'教材'));
+  for(const m of list){
+   const idx=known.indexOf(m.file_name),c=colors[idx<0?0:idx],a=el('a','card');a.style.setProperty('--bg',c[0]);a.style.setProperty('--accent',c[1]);
+   a.href='open.html?file='+encodeURIComponent(m.file_name)+'&key='+encodeURIComponent(m.material_key);
+   const art=el('div','card-labels');
+   art.append(el('span','type-icon',category==='シミュレーション'?'▷':'▤'),el('span','tag',category));
+   const b=badge(m);if(b)art.append(el('span','fresh',b));
+   const body=el('div','body');body.append(el('h3','',m.title),el('p','',m.description||''));
+   const bottom=el('div','bottom');bottom.append(el('span','',category==='暗記シート'?'暗記シートを開く':category==='シミュレーション'?'シミュレーションを開く':'教材を開く'),el('span','arrow','→'));body.append(bottom);a.append(art,body);grid.append(a);
+  }section.append(head,grid);area.append(section);
+ }
+ if(!rows.length)area.append(el('p','message','現在公開中の教材はありません。'));
 }
-function showCountStatus(text){
- let p=document.getElementById("countStatus");
- if(!p){p=document.createElement("p");p.id="countStatus";p.style.cssText="max-width:760px;margin:0 auto;padding:8px 16px;font-size:12px;color:#64748b";document.body.appendChild(p)}
- p.textContent=text;p.hidden=!text;
+async function load(){
+ const notice=document.getElementById('notice');
+ try{
+  const r=await fetch(U+'/rest/v1/material_visibility?select=*&order=sort_order',{headers:{apikey:K},cache:'no-store'});if(!r.ok)throw Error();
+  const data=await r.json();if(!Array.isArray(data))throw Error();
+  materials=data.filter(m=>m.is_public===true&&safeFile(m.file_name)&&typeof m.material_key==='string').sort((a,b)=>Number(a.sort_order)-Number(b.sort_order));
+  const nav=document.getElementById('filters');nav.replaceChildren();const categories=['すべて',...new Set(materials.map(m=>m.category||'その他'))];if(!categories.includes(selected))selected='すべて';
+  categories.forEach(name=>{const b=el('button','filter',name);b.type='button';b.setAttribute('aria-pressed',String(name===selected));b.onclick=()=>{selected=name;nav.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));render()};nav.append(b)});
+  notice.hidden=true;render();
+ }catch{materials=[];document.getElementById('catalog').replaceChildren();document.getElementById('total').textContent='';notice.hidden=false;notice.textContent='教材一覧を読み込めませんでした。通信状態を確認して「再読み込み」を押してください。';const b=el('button','filter','再読み込み');b.onclick=load;notice.append(b)}
 }
-window.addEventListener("pageshow",recordHomeView);
-function safeFile(v){return /^[A-Za-z0-9_.-]+\.html$/.test(v)?v:""}function safeKey(v){return /^[A-Za-z0-9_.-]+$/.test(v)?v:""}function render(rows){const main=document.getElementById("main");main.textContent="";const groups={};rows.filter(x=>x.is_public).forEach(x=>(groups[x.category]??=[]).push(x));const icons={"暗記シート":"📚","シミュレーション":"🔬","問題演習":"✏️","その他":"📘"};for(const [category,items] of Object.entries(groups)){const s=document.createElement("section"),h=document.createElement("h2"),g=document.createElement("div");h.textContent=(icons[category]||"📘")+" "+category;g.className="grid";items.sort((a,b)=>a.sort_order-b.sort_order).forEach(x=>{const file=safeFile(x.file_name),key=safeKey(x.material_key);if(!file||!key)return;const a=document.createElement("a");a.className="card";a.href="open.html?file="+encodeURIComponent(file)+"&key="+encodeURIComponent(key);for(const [c,t] of [["icon",x.icon||"📘"],["title",x.title],["desc",x.description||""],["badge",x.action_label||"学習する →"]]){const d=document.createElement("div");d.className=c;d.textContent=t;a.appendChild(d)}g.appendChild(a)});s.append(h,g);main.appendChild(s)}if(!main.children.length)main.innerHTML='<p class="message">現在公開中の教材はありません。</p>'}
-fetch(U+"/rest/v1/material_visibility?select=*&order=sort_order",{headers:{apikey:K}}).then(r=>{if(!r.ok)throw 0;return r.json()}).then(x=>{sessionStorage.setItem("materials",JSON.stringify(x));render(x)}).catch(()=>{const x=sessionStorage.getItem("materials");document.getElementById("main").innerHTML=x?"":'<p class="message">教材を読み込めませんでした。通信状態を確認してください。</p>';if(x)render(JSON.parse(x))});if("serviceWorker"in navigator)navigator.serviceWorker.register("./sw.js");
+document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{layout=b.dataset.view;document.querySelectorAll('[data-view]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));render()});
+window.addEventListener('pageshow',()=>{
+ load();
+ fetch(U+'/rest/v1/rpc/record_usage_event',{method:'POST',headers:{apikey:K,'Content-Type':'application/json'},body:JSON.stringify({p_event_type:'app_open',p_material_key:null}),keepalive:true}).catch(()=>{});
+});
+if('serviceWorker' in navigator&&location.protocol!=='file:')navigator.serviceWorker.register('./sw.js').catch(()=>{});
+
 </script></body></html>

@@ -1,4 +1,34 @@
-<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>教材を開いています</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f4f6f8;color:#334155;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif}p{background:#fff;padding:22px 28px;border-radius:14px;box-shadow:0 2px 10px #0001}</style></head><body><p>教材を開いています…</p><script>
-const U="https://kcroxgnjjizugbwfkxbg.supabase.co",K="sb_publishable_B_kSeRc0HJ35NPjiGzwC1Q_mRQOnIvi",q=new URLSearchParams(location.search),file=q.get("file")||"",key=q.get("key")||"";
-if(!/^[A-Za-z0-9_.-]+\.html$/.test(file)||!/^[A-Za-z0-9_.-]+$/.test(key)){location.replace("./")}else{Promise.race([fetch(U+"/rest/v1/rpc/record_usage_event",{method:"POST",headers:{apikey:K,"Content-Type":"application/json"},body:JSON.stringify({p_event_type:"material_open",p_material_key:key})}),new Promise(resolve=>setTimeout(resolve,1500))]).catch(()=>{}).finally(()=>location.replace(file))}
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="referrer" content="no-referrer"><meta name="theme-color" content="#ffffff"><title>教材｜生物学習アプリ</title><style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;background:#f3f6f5;color:#183d34;font-family:system-ui,sans-serif}body{display:flex;flex-direction:column;height:100vh;height:100dvh}.bar{flex:none;display:flex;align-items:center;gap:12px;padding:8px max(12px,env(safe-area-inset-right)) 8px max(12px,env(safe-area-inset-left));padding-top:max(8px,env(safe-area-inset-top));background:#fff;border-bottom:1px solid #d9e5dc}.bar a,.bar button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border:1px solid #cdded2;background:#edf5ef;color:#204d3d;border-radius:10px;padding:10px 13px;text-decoration:none;font:600 13px system-ui;cursor:pointer;white-space:nowrap}.bar a:hover,.bar button:hover{background:#dcefe2}.bar button{margin-left:auto}.bar a:focus-visible,.bar button:focus-visible{outline:3px solid #268768;outline-offset:2px}#name{font-size:13px;color:#597165;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}#content{flex:1;min-height:0;position:relative;padding-bottom:env(safe-area-inset-bottom)}iframe{display:block;border:0;width:100%;height:100%;background:white}#message{position:absolute;inset:0;background:#f3f6f5;padding:36px 22px;line-height:1.8;font-size:14px}#message a{color:#17543e}#status{position:absolute;bottom:8px;left:12px;right:12px;margin:0;background:#fff;padding:8px;border:1px solid #e0e5df;border-radius:8px;font-size:12px}[hidden]{display:none!important}@media(max-width:650px){#name{display:none}}
+</style></head><body><nav class="bar" aria-label="教材の移動"><a href="./index.html" target="_top">← 教材一覧へ</a><span id="name">教材</span><button id="top" type="button">↑ 上へ</button></nav><main id="content"><iframe id="material" title="教材" referrerpolicy="no-referrer" hidden></iframe><div id="message" role="status">教材を読み込んでいます…</div><p id="status" role="status" hidden></p></main><script>
+(()=>{
+ const U='https://kcroxgnjjizugbwfkxbg.supabase.co',K='sb_publishable_B_kSeRc0HJ35NPjiGzwC1Q_mRQOnIvi';
+ const q=new URLSearchParams(location.search),file=q.get('file')||'',key=q.get('key')||'';
+ const frame=document.getElementById('material'),message=document.getElementById('message'),status=document.getElementById('status');
+ const allowed=/^[A-Za-z0-9][A-Za-z0-9_.-]*\.html$/i.test(file)&&!['index.html','teacher.html','open.html'].includes(file.toLowerCase());
+ if(!allowed){message.textContent='教材のリンクが正しくありません。「教材一覧へ」から選び直してください。';document.getElementById('top').disabled=true;return;}
+ let recorded=false;
+ frame.addEventListener('load',()=>{
+  let doc;try{doc=frame.contentDocument;if(!doc||!doc.body)throw Error();}catch{message.textContent='教材を表示できませんでした。';return;}
+  frame.hidden=false;message.hidden=true;
+  const title=doc.title||'教材';frame.title=title;document.getElementById('name').textContent=title;document.title=title+'｜生物学習アプリ';
+  // One record per viewer opening. Returning from another tab does not create duplicates.
+  if(!recorded&&/^[A-Za-z0-9_.-]{1,100}$/.test(key)){
+   recorded=true;
+   fetch(U+'/rest/v1/rpc/record_usage_event',{method:'POST',headers:{apikey:K,'Content-Type':'application/json'},body:JSON.stringify({p_event_type:'material_open',p_material_key:key}),keepalive:true}).catch(()=>{});
+  }
+ });
+ document.getElementById('top').onclick=()=>{
+  try{
+   const doc=frame.contentDocument,win=frame.contentWindow;if(!doc||!win)return;
+   const behavior=matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth';
+   win.scrollTo({top:0,behavior});
+   doc.querySelectorAll('*').forEach(node=>{if(node.scrollTop>0)node.scrollTo({top:0,behavior})});
+   status.hidden=true;
+  }catch{status.textContent='この教材では上へ移動できません。教材内でスクロールしてください。';status.hidden=false;}
+ };
+ frame.src='./'+file;
+ frame.hidden=false;
+ if('serviceWorker'in navigator&&location.protocol!=='file:')navigator.serviceWorker.register('./sw.js').catch(()=>{});
+})();
 </script></body></html>

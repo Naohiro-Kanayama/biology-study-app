@@ -1,50 +1,16 @@
-const CACHE_NAME = "biology-study-app-v7";
-
-const APP_SHELL = [
-  "./",
-  "./index.html",
-  "./hormone_anki_sheet.html",
-  "./thyroxine_simulator.html",
-  "./pituitary_simulator.html",
-  "./homeostasis_anki_sheet.html",
-  "./manifest.webmanifest"
-];
-
-self.addEventListener("install", event => {
-  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL)));
-  self.skipWaiting();
-});
-
-self.addEventListener("activate", event => {
-  event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key)))
-    )
-  );
-  self.clients.claim();
-});
-
-self.addEventListener("fetch", event => {
-  if (event.request.method !== "GET") return;
-
-  const requestUrl = new URL(event.request.url);
-  const isHomePage = requestUrl.origin === self.location.origin &&
-    (requestUrl.pathname.endsWith("/") || requestUrl.pathname.endsWith("/index.html"));
-
-  if (isHomePage) {
-    event.respondWith(
-      fetch(event.request)
-        .then(response => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put("./index.html", copy));
-          return response;
-        })
-        .catch(() => caches.match("./index.html"))
-    );
-    return;
-  }
-
-  event.respondWith(
-    caches.match(event.request).then(cached => cached || fetch(event.request))
-  );
+const CACHE_NAME='biology-study-app-shared-viewer-v1';
+self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(['./index.html','./open.html'])).then(()=>self.skipWaiting())));
+self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('biology-study-app-')&&k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+self.addEventListener('fetch',event=>{
+ const req=event.request,url=new URL(req.url);
+ if(req.method!=='GET'||url.origin!==self.location.origin||url.pathname.endsWith('/teacher.html'))return;
+ const home=url.pathname.endsWith('/')||url.pathname.endsWith('/index.html'),viewer=url.pathname.endsWith('/open.html');
+ if(req.mode==='navigate'||home||viewer||url.pathname.endsWith('.html')){
+  const key=home?'./index.html':viewer?'./open.html':req;
+  event.respondWith(fetch(req).then(async r=>{if(r.ok){const c=await caches.open(CACHE_NAME);await c.put(key,r.clone())}return r}).catch(async()=>{
+   const c=await caches.open(CACHE_NAME),saved=await c.match(key);if(saved)return saved;
+   return new Response('<meta charset="utf-8"><p>通信できません。接続してから再度開いてください。</p>',{status:503,headers:{'Content-Type':'text/html;charset=utf-8'}});
+  }));return;
+ }
+ event.respondWith(caches.match(req).then(cached=>cached||fetch(req)));
 });
